@@ -25,13 +25,6 @@ void open();
 void part1(int);
 void part2(int);
 
-/**
- * TODO
- * 1. Content-Type Matcher.
- * 2. Separate Functions to Other c/h Files
- * 3. Separate Files
- * */
-
 int sockfd;
 
 void cleanExit(){
@@ -47,20 +40,17 @@ int main(int argc, char **argv){
     return 0;
 }
 
+// open the socket
 void open(){
-    int clientfd;
+    int clientfd, size;
     struct sockaddr_in my_addr;
     struct sockaddr_in client_addr;
-    int size, option;
 
     if((sockfd = socket(PF_INET, SOCK_STREAM, 0)) == -1){
         perror("socket");
         exit(1);
     }
 
-    option = 1;
-    setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
-    
     my_addr.sin_family = AF_INET;
     my_addr.sin_port = htons(PORT);
     my_addr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -73,7 +63,6 @@ void open(){
         perror("listen");
         exit(1);
     }
-    printf("Clear preparing.\n");
     while(1){
         size = sizeof(client_addr);
         if((clientfd = accept(sockfd, &client_addr, &size)) == -1){
@@ -81,9 +70,8 @@ void open(){
             continue;
         }
         
-        if( fork() == 0){
+        if(fork() == 0){
             part2(clientfd);
-            printf("\nClosed\n");
 
             fflush(stdout);
             shutdown(clientfd, SHUT_RDWR);
@@ -105,6 +93,5 @@ void part2(int clientfd){
     response res;
 
     decodeRequest(clientfd, &req);
-    // printf("GET %s %s\n", req.filename, req.version);
     sendResponse(clientfd, &req);
 }

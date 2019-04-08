@@ -21,10 +21,10 @@ typedef struct {
     char type[TYPE_SIZE];
 } response;
 
-int read_line(int fd, char *buff, int size);
+int readLine(int fd, char *buff, int size);
+
 void sendResponse(int clientfd, request *req);
 int decodeRequest(int clientfd, request *req);
-void buildResponse(request *req, response *res);
 void encodeResponse(response* result, char *data);
 
 void extToTypeString(char *ext, char *type);
