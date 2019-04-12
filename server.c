@@ -15,11 +15,6 @@
 #define PORT 1234
 #define BACKLOG 10
 
-#ifndef BUFF
-    #define BUFF_SIZE 256
-    #define BUFF
-#endif
-
 void cleanExit();
 void open();
 void part1(int);

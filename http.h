@@ -1,8 +1,4 @@
-#ifndef BUFF
-    #define BUFF_SIZE 256
-    #define BUFF
-#endif
-
+#define BUFF_SIZE 256
 #define SIZE 256
 #define TYPE_SIZE 64
 
